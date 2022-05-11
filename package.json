@@ -1,0 +1,32 @@
+{
+  "name": "CPSC-349-Final-Project",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@mantine/core": "^4.2.4",
+    "@mantine/dates": "^4.2.4",
+    "@mantine/form": "^4.2.4",
+    "@mantine/hooks": "^4.2.4",
+    "@mantine/modals": "^4.2.4",
+    "@mantine/next": "^4.2.4",
+    "@mantine/prism": "^4.2.4",
+    "@mantine/rte": "^4.2.4",
+    "dayjs": "^1.11.2",
+    "next": "12.1.6",
+    "react": "18.1.0",
+    "react-dom": "18.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.32",
+    "@types/react": "18.0.9",
+    "eslint": "8.15.0",
+    "eslint-config-next": "12.1.6",
+    "typescript": "4.6.4"
+  }
+}
