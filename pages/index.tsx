@@ -1,12 +1,15 @@
-import { Accordion, Button, Center, Container, Text, Title } from '@mantine/core';
+import { Accordion, Button, Center, Container, Stack, Text, Title } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
-import { ProjectAccordion } from 'components/ProjectAccordion';
-import dayjs from 'dayjs';
+import { EditProjectModal, ProjectAccordion } from 'components';
+import * as React from 'react';
 import type { Project } from 'types';
+import { getToday } from 'utils';
 
 const Home = () => {
-  const now = dayjs().toString();
+  // Gets the current day in year/month/day format (e.g. "2016/02/18")
+  const now = getToday();
   const [today, setToday] = useLocalStorage({ key: now, defaultValue: null });
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
   let projects = null;
 
   if (today) {
@@ -14,10 +17,18 @@ const Home = () => {
     projects = todayTodos.map((todo, i) => <ProjectAccordion {...todo} key={i} />);
   }
 
+  function showModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
   return (
     <Center>
       <Container size="sm" px="md">
-        <Center>
+        <Stack align="center">
           {!projects ? (
             <Text>There are no things to do at the moment!</Text>
           ) : (
@@ -28,9 +39,12 @@ const Home = () => {
               <Accordion>{projects}</Accordion>
             </>
           )}
-          <Button variant="outline">Add another task</Button>
-        </Center>
+          <Button variant="outline" onClick={showModal}>
+            Add another task
+          </Button>
+        </Stack>
       </Container>
+      <EditProjectModal opened={isOpen} onClose={closeModal} />
     </Center>
   );
 };
