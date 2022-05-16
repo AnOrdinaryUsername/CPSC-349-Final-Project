@@ -1,4 +1,5 @@
 export interface Project {
+  id: number;
   date: Date;
   name: string;
   priorityLevel: number;
@@ -6,6 +7,7 @@ export interface Project {
 }
 
 export interface Task {
+  id: number;
   isCompleted: boolean;
   description: string;
   image?: string;

@@ -1,22 +1,28 @@
 import { Accordion, Button, Group, Image, Text } from '@mantine/core';
 import type { Project, Task } from 'types';
 
-const AccordionLabel = ({ name }: Partial<Project>) => {
-  return <Text>{name}</Text>;
-};
-
 const TaskItem = ({ isCompleted, description, image, imageAlt }: Task) => {
   return (
-    <ul>
-      <li>
-        {isCompleted ? <s>{description}</s> : <Text>{description}</Text>}
-        {image && <Image radius="md" src={image} alt={imageAlt} />}
-      </li>
-    </ul>
+    <li>
+      {isCompleted ? <s>{description}</s> : <Text>{description}</Text>}
+      {image && <Image radius="md" src={image} alt={imageAlt} />}
+    </li>
   );
 };
 
-export const ProjectAccordion = ({ name, tasks }: Partial<Project>) => {
+interface ProjectAccordionProps extends Partial<Project> {
+  index: number;
+  onUpdate: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onDelete: (event: React.MouseEvent<HTMLButtonElement>) => void;
+}
+
+export const ProjectAccordion = ({
+  index,
+  name,
+  tasks,
+  onUpdate,
+  onDelete,
+}: ProjectAccordionProps) => {
   if (name === undefined || tasks === undefined) {
     throw new Error();
   }
@@ -24,12 +30,18 @@ export const ProjectAccordion = ({ name, tasks }: Partial<Project>) => {
   const projectTasks = tasks.map((task, i) => <TaskItem {...task} key={i} />);
 
   return (
-    <Accordion.Item label={<AccordionLabel name={name} />}>
-      {projectTasks}
-      <Group>
-        <Button variant="outline">Update</Button>
-        <Button variant="filled">Delete</Button>
-      </Group>
-    </Accordion.Item>
+    <Accordion>
+      <Accordion.Item label={name}>
+        <ul>{projectTasks}</ul>
+        <Group>
+          <Button variant="outline" onClick={onUpdate} id={index.toString()}>
+            Update
+          </Button>
+          <Button variant="filled" onClick={onDelete} id={index.toString()}>
+            Delete
+          </Button>
+        </Group>
+      </Accordion.Item>
+    </Accordion>
   );
 };
